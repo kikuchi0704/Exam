@@ -64,5 +64,17 @@ public class TestListSubject implements Serializable {
 		this.classNum = classNum;
 	}
 
+	public Map<Integer, Integer> getPoints() {
+		return points;
+	}
+
+	public void setPoints(Map<Integer, Integer> points) {
+		this.points = points;
+	}
+
+	public String getStudentNo() {
+		return studentNo;
+	}
+
 
 }
