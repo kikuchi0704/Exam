@@ -26,14 +26,17 @@ public class TestRegistAction extends Action {
 		// ローカル変数の指定 1
 		String entYearStr = ""; // 入力された入学年度
 		String classNum = ""; // 入力されたクラス番号
-		String subjectName = ""; // 入力された科目
-		String No = "";
+		String subject = ""; // 入力された科目
+		String NoStr = ""; // 入力された回数
 		int entYear = 0; // 入学年度
+		int no = 0; // 回数
 		List<Student> students = null; // 学生リスト
 		LocalDate todaysDate = LocalDate.now(); // LocalDateインスタンスを取得
 		int year = todaysDate.getYear(); // 現在の年を取得
 		StudentDao studentDao = new StudentDao(); // 学生Dao
 		ClassNumDao classNumDao = new ClassNumDao(); // クラス番号Daoを初期化
+		SubjectDao subjectDao = new SubjectDao();
+		TestDao testDao = new TestDao();
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 
 		// リクエストパラメーターの取得 2
@@ -98,7 +101,7 @@ public class TestRegistAction extends Action {
 		req.setAttribute("ent_year_set", entYearSet);
 
 		// JSPへフォワード 7
-		req.getRequestDispatcher("student_list.jsp").forward(req, res);
+		req.getRequestDispatcher("test_regist.jsp").forward(req, res);
 	}
 
 }
