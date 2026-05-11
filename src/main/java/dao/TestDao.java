@@ -44,7 +44,7 @@ public class TestDao extends Dao {
 				// リザルトセットが存在する場合
 				// 得点インスタンスに検索結果をセット
 				test.setStudent(student);
-				test.setSubject(subject);
+				test.setSubject(rSet.getString(no));
 				test.setSchool(school);
 				test.setNo(rSet.getInt("no"));
 				test.setPoint(rSet.getInt("point"));
