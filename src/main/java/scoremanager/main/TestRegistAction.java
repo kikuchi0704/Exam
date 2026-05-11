@@ -22,7 +22,7 @@ public class TestRegistAction extends Action {
         String entYearStr = request.getParameter("f1"); // 入学年度
         String classNum = request.getParameter("f2");   // クラス
         String subjectCode = request.getParameter("f3"); // 科目コード
-        String numStr = request.getParameter("f4");     // 回数
+       // String numStr = request.getParameter("f4");     // 回数
 
         // 絞り込み用リストの準備 (本来はDAOから取得)
         // 例: classNumDao.filter(teacher.getSchool());

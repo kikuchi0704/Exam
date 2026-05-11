@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.security.auth.Subject;
-
+import bean.Subject;
 import bean.Teacher;
 import dao.ClassNumDao;
-import dao.SubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import tool.Action;
+
 
 public class TestListAction extends Action {
     @Override
@@ -32,7 +31,7 @@ public class TestListAction extends Action {
         ClassNumDao cDao = new ClassNumDao();
         List<String> classNumSet = cDao.filter(teacher.getSchool());
         
-        SubjectDao sDao = new SubjectDao();
+        //SubjectDao sDao = new SubjectDao();
         List<Subject> subjects = sDao.filter(teacher.getSchool());
 
         // リクエスト属性にセット
