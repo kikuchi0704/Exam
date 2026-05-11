@@ -66,7 +66,7 @@
             <div class="mx-3 text-info">
                 科目情報を選択または学生情報を入力して検索ボタンをクリックしてください
             </div>
-            <div class="mt-2 text-danger mx-3">${errors.get("filter")}</div>
+            <div class="mt-2 text-danger mx-3">${errors}</div>
         </section>
     </c:param>
 </c:import>
