@@ -67,7 +67,7 @@ public class Test implements Serializable {
 		return school;
 	}
 
-	public void setSchool(School shcool) {
+	public void setSchool(School school) {
 		this.school = school;
 	}
 	
