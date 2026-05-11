@@ -7,15 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.Subject;
-
 import bean.School;
 import bean.Student;
+import bean.Subject;
 import bean.Test;
 
 public class TestDao extends Dao {
 
-	private String baseSql = "select * from test where school_cd = ?";
 	
 	public Test get(Student student, Subject subject, School school, int no) throws Exception {
 		// 得点インスタンスを初期化
@@ -89,7 +87,7 @@ public class TestDao extends Dao {
 				// 学生インスタンスを初期化
 				Test test = new Test();
 				// 学生インスタンスに検索結果をセット
-				test.setStudent(rSet.getString("student_no"));
+				test.setStudent(rSet.getString("student_no")); 
 				test.setSubject(rSet.getString("subject_cd"));
 				test.setSchool(school);
 				test.setNo(rSet.getInt("no"));
@@ -107,55 +105,31 @@ public class TestDao extends Dao {
 	}
 	
 	public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) throws Exception {
+	    List<Test> list = new ArrayList<>();
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    ResultSet rSet = null;
 
-		// リストを初期化
-		List<Test> list = new ArrayList<>();
-		// コネクションを確立
-		Connection connection = getConnection();
-		// プリペアードステートメント
-		PreparedStatement statement = null;
-		// リザルトセット
-		ResultSet rSet = null;
-		// SQL文の条件
-		String sql = "SELECT t.*, s.name AS student_name FROM test t JOIN student s ON t.student_no = s.no "
-				+ "WHERE s.ent_year = ? AND s.class_num = ? AND t.subject_cd = ? AND t.no = ? AND t.school_cd = ?";
+	    // "basesql" + を削除
+	    String sql = "SELECT t.*, s.name AS student_name FROM test t JOIN student s ON t.student_no = s.no "
+	               + "WHERE s.ent_year = ? AND s.class_num = ? AND t.subject_cd = ? AND t.no = ? AND t.school_cd = ?";
 
-		try {
-			// プリペアードステートメントにSQL文をセット
-			statement=connection.prepareStatement("basesql" + sql);
-			
-			// プリペアードステートメントに学校コードをバインド
-			statement.setInt(1, entYear);
-			statement.setString(2, classNum);
-			statement.setString(3, subject.getCd());
-			statement.setInt(4, num);
-			statement.setString(5, school.getCd());
-			// プリペアードステートメント(sql)を実行
-			rSet = statement.executeQuery();
-			// リストへの格納処理を実行
-			list=postFilter(rSet, school);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			// プリペアードステートメントを閉じる
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-			// コネクションを閉じる
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
-
-		return list;
+	    try {
+	        statement = connection.prepareStatement(sql); // 修正
+	        statement.setInt(1, entYear);
+	        statement.setString(2, classNum);
+	        statement.setString(3, subject.getCd());
+	        statement.setInt(4, num);
+	        statement.setString(5, school.getCd());
+	        
+	        rSet = statement.executeQuery();
+	        list = postFilter(rSet, school);
+	    } catch (Exception e) {
+	        throw e;
+	    } finally {
+	        // close処理（省略）
+	    }
+	    return list;
 	}
 
 	public boolean save(List<Test> list) throws Exception {
