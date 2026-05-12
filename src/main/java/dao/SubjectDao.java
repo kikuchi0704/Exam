@@ -32,6 +32,7 @@ public class SubjectDao extends Dao {
             if (rSet.next()) {
 
                 subject.setCd(rSet.getString("cd"));
+                subject.setName(rSet.getString("name"));
                 subject.setSchool(school);
             } else {
             	subject = null;
@@ -67,7 +68,7 @@ public class SubjectDao extends Dao {
 
         try {
 
-            statement = connection.prepareStatement("select cd from subject where school_cd = ?");
+        	statement = connection.prepareStatement("select cd, name from subject where school_cd = ?");
 
             statement.setString(1, school.getCd());
 

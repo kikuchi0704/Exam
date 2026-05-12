@@ -6,6 +6,7 @@
         <section class="me-4">
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績参照</h2>
             
+            <%-- 1. 科目情報から検索 --%>
             <div class="row border mx-3 mb-4 py-3 rounded">
                 <form action="TestListSubjectExecute.action" method="get">
                     <div class="row align-items-center">
@@ -37,12 +38,13 @@
                             </select>
                         </div>
                         <div class="col-2">
-                            <button class="btn btn-secondary w-100">表示</button>
+                            <button class="btn btn-secondary w-100">検索</button>
                         </div>
                     </div>
                 </form>
             </div>
 
+            <%-- 2. 学生情報から検索 --%>
             <div class="row border mx-3 py-3 rounded">
                 <form action="TestListStudentExecute.action" method="get">
                     <div class="row align-items-center">
@@ -51,7 +53,7 @@
                             <input type="text" name="f4" class="form-control" placeholder="学生番号を入力してください" required>
                         </div>
                         <div class="col-2">
-                            <button class="btn btn-secondary w-100">表示</button>
+                            <button class="btn btn-secondary w-100">検索</button>
                         </div>
                     </div>
                 </form>
