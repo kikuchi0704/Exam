@@ -12,36 +12,32 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
-/**
- * 学生別成績一覧表示の実行アクション
- */
 public class TestListStudentExecuteAction extends Action {
-
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        // セッションからユーザー情報を取得（学校コードの特定に使用）
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
 
-        // リクエストパラメータから学生番号を取得
+        // 入力された学生番号を取得
         String studentNo = req.getParameter("f4");
 
-        // DAOの初期化
-        TestListStudentDao tDao = new TestListStudentDao();
+        // 既存のStudentDaoを使用して学生情報を取得
         StudentDao sDao = new StudentDao();
-
-        // 1. 学生情報を取得（氏名表示用）
         Student student = sDao.get(studentNo);
 
-        // 2. その学生の成績一覧を取得
-        List<TestListStudent> tests = tDao.filter(student, teacher.getSchool());
+        if (student != null) {
+            // 学生が存在する場合、成績リストを取得
+            TestListStudentDao tDao = new TestListStudentDao();
+            List<TestListStudent> tests = tDao.filter(student, teacher.getSchool());
+            
+            req.setAttribute("student", student);
+            req.setAttribute("tests", tests);
+        } else {
+            // 学生が見つからない場合のエラー処理
+            req.setAttribute("errors", "学生情報が存在しませんでした");
+        }
 
-        // JSPに渡すデータをリクエスト属性にセット
-        req.setAttribute("f4", studentNo); // 入力値を保持
-        req.setAttribute("student", student); // 学生情報（氏名など）
-        req.setAttribute("tests", tests); // 成績リスト
-
-        // 学生別成績一覧JSPへフォワード
+        // 学生別成績一覧画面へ
         req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
     }
 }

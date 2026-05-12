@@ -6,66 +6,71 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import bean.School;
+import bean.Subject;
 import bean.TestListSubject;
 
-/**
- * 科目別成績一覧DAO
- */
 public class TestListSubjectDao extends Dao {
 
-    public List<TestListSubject> filter(int entYear, String classNum, String subjectCd, School school) throws Exception {
-        // 学生番号をキーにして、重複しないように学生データを保持するマップ
-        Map<String, TestListSubject> map = new HashMap<>();
-        Connection con = getConnection();
-        PreparedStatement st = null;
+    public List<TestListSubject> filter(int entYear, String classNum, Subject subject, School school) throws Exception {
+        List<TestListSubject> list = new ArrayList<>();
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        ResultSet rSet = null;
+
+        // 【解説】LEFT JOINを使って、点数がない学生もリストに載るようにします
+        // order by st.no で並べることで、同じ学生の「1回目」「2回目」のデータが連続して現れるようにします
+        String sql = "select st.ent_year, st.class_num, st.no as student_no, st.name, t.no as test_no, t.point " +
+                     "from student st " +
+                     "left join test t on st.no = t.student_no and t.subject_cd = ? and t.school_cd = st.school_cd " +
+                     "where st.ent_year = ? and st.class_num = ? and st.school_cd = ? " +
+                     "order by st.no asc, t.no asc";
 
         try {
-            String sql = "SELECT S.ENT_YEAR, S.NO AS STUDENT_NO, S.NAME AS STUDENT_NAME, S.CLASS_NUM, T.NO AS TEST_COUNT, T.POINT " +
-                         "FROM TEST T " +
-                         "JOIN STUDENT S ON T.STUDENT_NO = S.NO AND T.SCHOOL_CD = S.SCHOOL_CD " +
-                         "WHERE S.ENT_YEAR = ? AND S.CLASS_NUM = ? AND T.SUBJECT_CD = ? AND T.SCHOOL_CD = ? " +
-                         "ORDER BY S.NO ASC, T.NO ASC";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, subject.getCd());
+            statement.setInt(2, entYear);
+            statement.setString(3, classNum);
+            statement.setString(4, school.getCd());
+            rSet = statement.executeQuery();
 
-            st = con.prepareStatement(sql);
-            st.setInt(1, entYear);
-            st.setString(2, classNum);
-            st.setString(3, subjectCd);
-            st.setString(4, school.getCd());
+            String lastStudentNo = ""; // 1つ前の行の学生番号を覚えておく
+            TestListSubject tls = null;
 
-            ResultSet rs = st.executeQuery();
+            while (rSet.next()) {
+            	String currentStudentNo = rSet.getString("student_no");
+                int testNo = rSet.getInt("test_no");
+                int point = rSet.getInt("point");
 
-            while (rs.next()) {
-                String studentNo = rs.getString("STUDENT_NO");
-                TestListSubject bean;
-
-                if (map.containsKey(studentNo)) {
-                    // すでにMapにある場合はそのインスタンスを取得
-                    bean = map.get(studentNo);
-                } else {
-                    // 新規学生の場合は新しく作成して基本情報をセット
-                    bean = new TestListSubject();
-                    bean.setEntYear(rs.getInt("ENT_YEAR"));
-                    bean.setStudentNo(studentNo);
-                    bean.setStudentName(rs.getString("STUDENT_NAME"));
-                    bean.setClassNum(rs.getString("CLASS_NUM"));
-                    bean.setPoints(new HashMap<Integer, Integer>()); // Mapの初期化
-                    map.put(studentNo, bean);
+                // 【解説】新しい学生番号が現れたら、新しい「1人分の入れ物(Bean)」を作る
+                if (!currentStudentNo.equals(lastStudentNo)) {
+                    tls = new TestListSubject();
+                    tls.setEntYear(rSet.getInt("ent_year"));
+                    tls.setClassNum(rSet.getString("class_num"));
+                    tls.setStudentNo(currentStudentNo);
+                    tls.setStudentName(rSet.getString("name"));
+                    
+                    // Mapを初期化（これがないとput時にエラーになる）
+                    tls.setPoints(new HashMap<Integer, Integer>());
+                    
+                    list.add(tls);
+                    lastStudentNo = currentStudentNo; // 今の番号を「1つ前」として記録
                 }
-                
-                // 回数と点数をMapに追加
-                bean.putPoint(rs.getInt("TEST_COUNT"), rs.getInt("POINT"));
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (st != null) st.close();
-            if (con != null) con.close();
-        }
 
-        // Mapの値をリストに変換して返す
-        return new ArrayList<>(map.values());
+                // 【解説】テストの回数（1または2）と点数を取得
+                //int testNo = rSet.getInt("test_no");
+                if (!rSet.wasNull()) {
+                    // testNo(1または2)をキーにして、点数をMapに保存する
+                    // 同じ学生の2行目が来たときは、同じtlsオブジェクトのMapに2つ目のデータが入る
+                    tls.putPoint(testNo, rSet.getInt("point"));
+                }
+            }
+        } finally {
+            if (rSet != null) rSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+        return list;
     }
 }
