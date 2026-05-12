@@ -19,7 +19,7 @@ public class SubjectUpdateAction extends Action {
         String cd = req.getParameter("cd");
 
         SubjectDao dao = new SubjectDao();
-        Subject subject = dao.get(cd);
+        Subject subject = dao.get(cd, teacher.getSchool());
 
         if (subject == null) {
             req.getRequestDispatcher("subject_list.jsp").forward(req, res);

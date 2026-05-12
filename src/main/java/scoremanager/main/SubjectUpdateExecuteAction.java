@@ -25,7 +25,7 @@ public class SubjectUpdateExecuteAction extends Action {
         subject.setSchool(teacher.getSchool());
 
         SubjectDao dao = new SubjectDao();
-        dao.update(subject);
+        dao.save(subject);
 
         // ★更新後は一覧へ戻すのが正しい
         req.getRequestDispatcher("SubjectList.action").forward(req, res);
