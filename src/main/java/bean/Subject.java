@@ -4,47 +4,32 @@ import java.io.Serializable;
 
 public class Subject implements Serializable {
 
-	/**
-	 * 学校コード:String
-	 */
-	private String cd;
+    private String cd;
+    private String name;
+    private School school;
 
-	/**
-	 * 学校名:String
-	 */
-	private String name;
+    // ゲッタ・セッタ
+    public String getCd() {
+        return cd;
+    }
 
-	/**
-	 * 学校：school
-	 */
-	private School school;
+    public void setCd(String cd) {
+        this.cd = cd;
+    }
 
-	/**
-	 * ゲッタ・セッタ
-	 */
-	public String getCd() {
-		return cd;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCd(String cd) {
-		this.cd = cd;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public School getSchool() {
+        return school;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public School getSchool() {
-		return school;
-	}
-	public void setSchool(School school) {
-		this.school = school;
-	}
-
-
-
+    public void setSchool(School school) {
+        this.school = school;
+    }
 }
