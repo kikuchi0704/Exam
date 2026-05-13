@@ -1,5 +1,6 @@
 package scoremanager.main;
 
+import bean.School;
 import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
@@ -18,8 +19,13 @@ public class SubjectUpdateAction extends Action {
 
         String cd = req.getParameter("cd");
 
+        // 学校情報取得
+        School school = teacher.getSchool();
+
         SubjectDao dao = new SubjectDao();
-        Subject subject = dao.get(cd);
+
+        // school を渡す
+        Subject subject = dao.get(cd, school);
 
         if (subject == null) {
             req.getRequestDispatcher("subject_list.jsp").forward(req, res);

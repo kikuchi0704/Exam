@@ -54,7 +54,34 @@ public class SubjectDao extends Dao {
         return list;
     }
 
-    // ★追加：更新処理
+    // 新規登録
+    public boolean save(Subject subject) throws Exception {
+
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+
+        try {
+
+            statement = connection.prepareStatement(
+                "insert into subject (cd, name, school_cd) values (?, ?, ?)"
+            );
+
+            statement.setString(1, subject.getCd());
+            statement.setString(2, subject.getName());
+            statement.setString(3, subject.getSchool().getCd());
+
+            int count = statement.executeUpdate();
+
+            return count > 0;
+
+        } finally {
+
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+    }
+
+    // 更新
     public boolean update(Subject subject) throws Exception {
 
         Connection connection = getConnection();
@@ -80,7 +107,35 @@ public class SubjectDao extends Dao {
             if (connection != null) connection.close();
         }
     }
-    public Subject get(String cd) throws Exception {
+
+    // 削除
+    public boolean delete(Subject subject) throws Exception {
+
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+
+        try {
+
+            statement = connection.prepareStatement(
+                "delete from subject where cd = ? and school_cd = ?"
+            );
+
+            statement.setString(1, subject.getCd());
+            statement.setString(2, subject.getSchool().getCd());
+
+            int count = statement.executeUpdate();
+
+            return count > 0;
+
+        } finally {
+
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+    }
+
+    // 1件取得
+    public Subject get(String cd, School school) throws Exception {
 
         Connection connection = getConnection();
         PreparedStatement statement = null;
@@ -89,10 +144,11 @@ public class SubjectDao extends Dao {
         try {
 
             statement = connection.prepareStatement(
-                "select * from subject where cd = ?"
+                "select * from subject where cd = ? and school_cd = ?"
             );
 
             statement.setString(1, cd);
+            statement.setString(2, school.getCd());
 
             resultSet = statement.executeQuery();
 
@@ -104,6 +160,7 @@ public class SubjectDao extends Dao {
 
                 subject.setCd(resultSet.getString("cd"));
                 subject.setName(resultSet.getString("name"));
+                subject.setSchool(school);
             }
 
             return subject;
