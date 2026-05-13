@@ -104,75 +104,35 @@ public class SubjectDao extends Dao {
         return list;
     }
     
+    // 新規登録
     public boolean save(Subject subject) throws Exception {
 
-		// コネクションを確立
-		Connection connection = getConnection();
-		// プリペアードステートメント
-		PreparedStatement statement = null;
-		// 実行件数
-		int count = 0;
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
 
-		try {
-			// データベースから科目を取得
-			Subject old = get(subject.getCd(), subject.getSchool());
-			if (old == null) {
-				// 科目が存在しなかった場合（追加）
-				// プリペアードステートメントにINSERT文をセット
-				statement = connection.prepareStatement(
-						"insert into subject(school_cd, cd, name)values(?,?,?)"
-						);
-				// プリペアードステートメントに値をバインド
-				statement.setString(1, subject.getSchool().getCd());
-				statement.setString(2, subject.getCd());
-				statement.setString(3, subject.getName());
-				
-			} else {
-				// 科目が存在した場合（更新）
-				// プリペアードステートメントにUPDATE文をセット
-				statement=connection.prepareStatement(
-						"update subject set name=? where cd=?"
-						);
-				
-				// プリペアードステートメントに値をバインド
-				statement.setString(1, subject.getName());
-				statement.setString(2, subject.getCd());
+        try {
 
-			}
-			// プリペアードステートメントを実行
-			count = statement.executeUpdate();
+            statement = connection.prepareStatement(
+                "insert into subject (cd, name, school_cd) values (?, ?, ?)"
+            );
 
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			// プリペアードステートメントを閉じる
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-			// コネクションを閉じる
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
+            statement.setString(1, subject.getCd());
+            statement.setString(2, subject.getName());
+            statement.setString(3, subject.getSchool().getCd());
 
-		if (count > 0) {
-			// 実行件数が1件以上ある場合
-			return true;
-		} else {
-			// 実行件数が0件の場合
-			return false;
-		}
-	}
+            int count = statement.executeUpdate();
+
+            return count > 0;
+
+        } finally {
+
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+    }
     
     public boolean delete(Subject subject) throws Exception {
+    	
     	Connection connection = getConnection();
     	PreparedStatement statement = null;
     	int count = 0;
@@ -201,7 +161,6 @@ public class SubjectDao extends Dao {
     			throw sqle;
     			}
     	}
-
-    	return count > 0;
-    }
+		return count > 0;
+    } 
 }
