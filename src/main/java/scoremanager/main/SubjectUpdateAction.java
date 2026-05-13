@@ -23,13 +23,10 @@ public class SubjectUpdateAction extends Action {
         School school = teacher.getSchool();
 
         SubjectDao dao = new SubjectDao();
-<<<<<<< HEAD
 
         // school を渡す
         
-=======
-        Subject subject = dao.get(cd, school, teacher.getSchool());
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
+        Subject subject = dao.get(cd, school);
 
         if (subject == null) {
             req.getRequestDispatcher("subject_list.jsp").forward(req, res);
