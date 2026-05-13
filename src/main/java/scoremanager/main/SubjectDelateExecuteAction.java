@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
-public class SubjectDeleteExecuteAction extends Action {
+public class SubjectDelateExecuteAction extends Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -26,7 +26,7 @@ public class SubjectDeleteExecuteAction extends Action {
 
 		if (subject != null) {
 			// 対象が存在する場合のみ削除を実行
-			sDao.delete(subject);
+			sDao.delate(subject);
 		}
 
 		// JSPへフォワード（削除完了画面、または科目一覧へリダイレクト）
