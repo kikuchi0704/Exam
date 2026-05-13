@@ -1,6 +1,11 @@
 package bean;
 
 import java.io.Serializable;
+<<<<<<< HEAD
+=======
+
+public class Subject implements Serializable {
+>>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
 
 public class Subject implements Serializable {
 
@@ -19,6 +24,7 @@ public class Subject implements Serializable {
      */
     private School school;
 
+    // ゲッタ・セッタ
     public String getCd() {
         return cd;
     }

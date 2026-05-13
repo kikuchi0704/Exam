@@ -1,49 +1,59 @@
 package scoremanager.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import bean.Subject;
 import bean.Teacher;
 import bean.TestListSubject;
+import dao.ClassNumDao;
+import dao.SubjectDao;
 import dao.TestListSubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
-/**
- * 科目別成績一覧表示の実行アクション
- */
 public class TestListSubjectExecuteAction extends Action {
-
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        // セッションから教師情報を取得
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
 
-        // リクエストパラメータの取得（f1:入学年度, f2:クラス, f3:科目コード）
-        int entYear = Integer.parseInt(req.getParameter("f1"));
+        // 【重要】再検索用にリストをセットし直す
+        setSearchData(req, teacher); 
+
+        // 入力値取得
+        String entYearStr = req.getParameter("f1");
         String classNum = req.getParameter("f2");
         String subjectCd = req.getParameter("f3");
 
-        // 未選択チェック（バリデーション）
-        if (entYear == 0 || classNum.equals("0") || subjectCd.equals("0")) {
-            req.setAttribute("errors", "入学年度、クラス、科目を選択してください");
-            req.getRequestDispatcher("TestList.action").forward(req, res);
-            return;
+        if (entYearStr != null && classNum != null && subjectCd != null) {
+            int entYear = Integer.parseInt(entYearStr);
+            SubjectDao sDao = new SubjectDao();
+            Subject subject = sDao.get(subjectCd, teacher.getSchool());
+            TestListSubjectDao dao = new TestListSubjectDao();
+            List<TestListSubject> list = dao.filter(entYear, classNum, subject, teacher.getSchool());
+            req.setAttribute("tests", list);
         }
-
-        // DAOを使ってデータを取得
-        TestListSubjectDao dao = new TestListSubjectDao();
-        List<TestListSubject> tests = dao.filter(entYear, classNum, subjectCd, teacher.getSchool());
-
-        // JSPで表示するためにリクエスト属性へセット
-        req.setAttribute("f1", entYear);
-        req.setAttribute("f2", classNum);
-        req.setAttribute("f3", subjectCd);
-        req.setAttribute("tests", tests);
-
-        // 科目別成績一覧JSPへフォワード
+        
         req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+    }
+
+    // 共通して使うリスト作成メソッド（Action内に追加するか共通クラスにする）
+    private void setSearchData(HttpServletRequest req, Teacher teacher) throws Exception {
+        List<Integer> entYearSet = new ArrayList<>();
+        int year = java.time.LocalDate.now().getYear();
+        for (int i = year; i >= year - 10; i--) entYearSet.add(i);
+        
+        ClassNumDao cDao = new ClassNumDao();
+        List<String> classNumSet = cDao.filter(teacher.getSchool());
+        
+        SubjectDao sDao = new SubjectDao();
+        List<Subject> subjects = sDao.filter(teacher.getSchool());
+
+        req.setAttribute("ent_year_set", entYearSet);
+        req.setAttribute("class_num_set", classNumSet);
+        req.setAttribute("subjects", subjects);
     }
 }

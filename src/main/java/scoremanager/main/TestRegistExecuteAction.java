@@ -10,7 +10,7 @@ public class TestRegistExecuteAction extends Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // JSPの各行の得点入力を取得 (配列として受け取る)
-        String[] studentNos = request.getParameterValues("student_no[]");
+        //String[] studentNos = request.getParameterValues("student_no[]");
         String[] points = request.getParameterValues("point[]");
         
         // バリデーションチェック (0~100の範囲など)
