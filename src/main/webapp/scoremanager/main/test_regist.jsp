@@ -14,63 +14,43 @@
             </h2>
 
             <%-- 検索フォーム --%>
-            <form method="get" action="TestRegist.action">
-
-                <div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
-
-                    <%-- 入学年度 --%>
-                    <div class="col-3">
-                        <label class="form-label">入学年度</label>
-
-                        <select class="form-select" name="f1">
-                            <option value="">--------</option>
-
-                            <c:forEach var="year" items="${ent_year_set}">
-                                <option value="${year}"
-                                    <c:if test="${year == f1}">
-                                        selected
-                                    </c:if>>
-                                    ${year}
-                                </option>
-                            </c:forEach>
-                        </select>
+               <%-- 1. 科目情報から検索 --%>
+            <div class="row border mx-3 mb-4 py-3 rounded">
+                <form action="TestListSubjectExecute.action" method="get">
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <label class="form-label">入学年度</label>
+                            <select name="f1" class="form-select" required>
+                                <option value="">--------</option>
+                                <c:forEach var="year" items="${ent_year_set}">
+                                    <option value="${year}">${year}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label">クラス</label>
+                            <select name="f2" class="form-select" required>
+                                <option value="">--------</option>
+                                <c:forEach var="num" items="${class_num_set}">
+                                    <option value="${num}">${num}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label">科目</label>
+                            <select name="f3" class="form-select" required>
+                                <option value="">--------</option>
+                                <c:forEach var="sub" items="${subjects}">
+                                    <option value="${sub.cd}">${sub.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-secondary w-100">検索</button>
+                        </div>
                     </div>
-
-                    <%-- クラス --%>
-                    <div class="col-3">
-                        <label class="form-label">クラス</label>
-
-                        <select class="form-select" name="f2">
-                            <option value="">--------</option>
-
-                            <c:forEach var="num" items="${class_num_set}">
-                                <option value="${num}"
-                                    <c:if test="${num == f2}">
-                                        selected
-                                    </c:if>>
-                                    ${num}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
-
-                    <%-- 科目 --%>
-                    <div class="col-3">
-                        <label class="form-label">科目</label>
-
-                        <select class="form-select" name="f3">
-                            <option value="">--------</option>
-
-                            <c:forEach var="subject" items="${subjects}">
-                                <option value="${subject.cd}"
-                                    <c:if test="${subject.cd == f3}">
-                                        selected
-                                    </c:if>>
-                                    ${subject.name}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
+                </form>
+            </div>
 
                     <%-- 回数 --%>
                     <div class="col-2">
