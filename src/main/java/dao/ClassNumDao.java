@@ -96,8 +96,11 @@ public class ClassNumDao extends Dao {
 
 			// リザルトセットを全件走査
 			while (rSet.next()) {
+				ClassNum classNum = new ClassNum();
+				classNum.setSchool(school);
+				classNum.setClass_num(rSet.getString("class_num"));
 				// リストにクラス番号を追加
-				list.add(rSet.getString("class_num"));
+				list.add(classNum);
 			}
 		} catch (Exception e) {
 			throw e;
