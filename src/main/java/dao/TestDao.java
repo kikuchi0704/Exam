@@ -104,37 +104,43 @@ public class TestDao extends Dao {
     }
     
     public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) throws Exception {
-        
-    	// リストを初期化
-    	List<Test> list = new ArrayList<>();
-    	// コネクションを確立
+        List<Test> list = new ArrayList<>();
         Connection connection = getConnection();
-        // プリペアードステートメント
         PreparedStatement statement = null;
-        // リザルトセット
-        ResultSet rSet = null;
-        // SQL文の条件
-        String sql = "SELECT t.*, s.name AS student_name FROM test t JOIN student s ON t.student_no = s.no "
-                   + "WHERE s.ent_year = ? AND s.class_num = ? AND t.subject_cd = ? AND t.no = ? AND t.school_cd = ?";
 
         try {
-        	// プリペアードすてーーとメントにSQL文をセット
+            // 「指定した条件の学生」と「その学生の特定のテスト成績」を結合して取得
+            // 成績がない学生も表示するため LEFT OUTER JOIN を使うのが一般的です
+            String sql = "SELECT s.no, s.name, s.ent_year, s.class_num, t.point " +
+                         "FROM student s " +
+                         "LEFT OUTER JOIN test t ON s.no = t.student_no " +
+                         "AND t.subject_cd = ? AND t.no = ? " +
+                         "WHERE s.ent_year = ? AND s.class_num = ? AND s.school_cd = ?";
+            
             statement = connection.prepareStatement(sql);
-            
-            statement.setInt(1, entYear);
-            statement.setString(2, classNum);
-            statement.setString(3, subject.getCd());
-            statement.setInt(4, num);
+            statement.setString(1, subject.getCd());
+            statement.setInt(2, num);
+            statement.setInt(3, entYear);
+            statement.setString(4, classNum);
             statement.setString(5, school.getCd());
-            
-            // プリペアードステートメントを実行
-            rSet = statement.executeQuery();
-            // リストへの格納処理を実行
-            list = postFilter(rSet, school);
-        } catch (Exception e) {
-            throw e;
+
+            ResultSet rSet = statement.executeQuery();
+            while (rSet.next()) {
+                Test test = new Test();
+                Student student = new Student();
+                student.setNo(rSet.getString("no"));
+                student.setName(rSet.getString("name"));
+                student.setEntYear(rSet.getInt("ent_year"));
+                student.setClassNum(rSet.getString("class_num"));
+                
+                test.setStudent(student);
+                test.setPoint(rSet.getInt("point")); // 成績がなければ0（またはnull管理）
+                test.setNo(num);
+                test.setSubject(subject);
+                test.setSchool(school);
+                list.add(test);
+            }
         } finally {
-            if (rSet != null) rSet.close();
             if (statement != null) statement.close();
             if (connection != null) connection.close();
         }
@@ -216,4 +222,6 @@ public class TestDao extends Dao {
         }
         return count > 0;
     }
+    
+    
 }
