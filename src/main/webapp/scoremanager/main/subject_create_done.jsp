@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html>
+=======
 <%-- 学生登録完了JSP --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -23,3 +37,4 @@
 		</div>
 	</c:param>
 </c:import>
+>>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git

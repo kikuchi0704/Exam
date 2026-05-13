@@ -204,7 +204,7 @@ public class ClassNumDao extends Dao {
 
 			// プリペアードステートメントを閉じる
 			if (statement != null) {
-				try {
+            try {
 					statement.close();
 				} catch (SQLException sqle) {
 					throw sqle;
