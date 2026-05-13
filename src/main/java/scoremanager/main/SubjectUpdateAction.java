@@ -26,9 +26,9 @@ public class SubjectUpdateAction extends Action {
 <<<<<<< HEAD
 
         // school を渡す
-        Subject subject = dao.get(cd, school);
+        
 =======
-        Subject subject = dao.get(cd, teacher.getSchool());
+        Subject subject = dao.get(cd, school, teacher.getSchool());
 >>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
 
         if (subject == null) {
