@@ -26,7 +26,7 @@ public class SubjectDelateExecuteAction extends Action {
 
 		if (subject != null) {
 			// 対象が存在する場合のみ削除を実行
-			sDao.delate(subject);
+			sDao.delete(subject);
 		}
 
 		// JSPへフォワード（削除完了画面、または科目一覧へリダイレクト）
