@@ -104,9 +104,7 @@ public class SubjectDao extends Dao {
         return list;
     }
     
-    public boolean save(Subject subject) throws Exception {
 
-<<<<<<< HEAD
     // 新規登録
     public boolean save(Subject subject) throws Exception {
 
@@ -136,14 +134,12 @@ public class SubjectDao extends Dao {
 
     // 更新
     public boolean update(Subject subject) throws Exception {
-=======
 		// コネクションを確立
 		Connection connection = getConnection();
 		// プリペアードステートメント
 		PreparedStatement statement = null;
 		// 実行件数
 		int count = 0;
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
 
 		try {
 			// データベースから科目を取得
@@ -234,7 +230,7 @@ public class SubjectDao extends Dao {
     			}
     	}
 
-<<<<<<< HEAD
+
         } finally {
 
             if (statement != null) statement.close();
@@ -305,8 +301,6 @@ public class SubjectDao extends Dao {
             if (statement != null) statement.close();
             if (connection != null) connection.close();
         }
-=======
     	return count > 0;
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
     }
 }
