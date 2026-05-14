@@ -16,8 +16,8 @@ public class SubjectUpdateExecuteAction extends Action {
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
 
-        String cd = req.getParameter("cd");
-        String name = req.getParameter("name");
+        String cd = req.getParameter("subject_cd");
+        String name = req.getParameter("subject_name");
 
         Subject subject = new Subject();
         subject.setCd(cd);
@@ -28,6 +28,6 @@ public class SubjectUpdateExecuteAction extends Action {
         dao.save(subject);
 
         // ★更新後は一覧へ戻すのが正しい
-        req.getRequestDispatcher("SubjectList.action").forward(req, res);
+        req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
     }
 }
