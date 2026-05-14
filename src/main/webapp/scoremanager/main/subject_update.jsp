@@ -23,20 +23,12 @@
 
                 <div>
                     <label for="cd">科目コード</label><br>
-                    <input type="text"
-                           id="cd"
-                           name="cd"
-                           value="${cd}"
-                           />
+                    <input type="text" id="cd" name="cd" value="${cd}" readonly />
                 </div>
 
                 <div>
                     <label for="name">科目名</label><br>
-                    <input type="text"
-                           id="name"
-                           name="name"
-                           value="${name}"
-                           required />
+                   <input type="text" id="name" name="name" value="${name}" required />
                 </div>
 
                 <div class="mt-3">

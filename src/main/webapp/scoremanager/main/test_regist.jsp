@@ -46,9 +46,9 @@
                                 <option value="2" <c:if test="${f4 == '2'}">selected</c:if>>2</option>
                             </select>
                         </div>
-                        <div class="col-1 mt-4">
-                            <button class="btn btn-secondary">検索</button>
-                        </div>
+                        <div class="col-2 text-center">
+							<button class="btn btn-secondary" id="filter-button">検索</button>
+						</div>
                     </div>
                 </form>
             </div>

@@ -10,44 +10,37 @@ import tool.Action;
 
 public class SubjectUpdateExecuteAction extends Action {
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	// SubjectUpdateExecuteAction.java 内の execute メソッド
+	@Override
+	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	    HttpSession session = req.getSession();
+	    Teacher teacher = (Teacher) session.getAttribute("user");
 
-        HttpSession session = req.getSession();
-        Teacher teacher = (Teacher) session.getAttribute("user");
+	    // 1. JSPの <input name="..."> と名前を合わせる
+	    String cd = req.getParameter("cd"); // JSPが name="cd" の場合
+	    String name = req.getParameter("name"); // JSPが name="name" の場合
 
-        // JSPからのパラメータ取得
-        String cd = req.getParameter("subject_cd");
-        String name = req.getParameter("subject_name");
+	    // 2. Beanにセット
+	    Subject subject = new Subject();
+	    subject.setCd(cd);
+	    subject.setName(name);
+	    subject.setSchool(teacher.getSchool());
 
-        // Beanにセット
-        Subject subject = new Subject();
-        subject.setCd(cd);
-        subject.setName(name);
-        subject.setSchool(teacher.getSchool());
+	    SubjectDao dao = new SubjectDao();
 
-        SubjectDao dao = new SubjectDao();
+	    // --- 修正箇所：ここにあった SubjectList.action への forward を削除 ---
 
-        dao.save(subject);
-        
-        
-        // ★更新後は一覧へ戻すのが正しい
-        req.getRequestDispatcher("SubjectList.action").forward(req, res);
+	    // 3. DAOのupdateメソッドを呼び出す（save ではなく update）
+	    boolean isSuccess = dao.update(subject);
 
-        // DAOのupdateメソッドを呼び出す
-        boolean isSuccess = dao.update(subject);
-
-        if (isSuccess) {
-            // 更新成功：完了画面へ（画像2）
-            req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
-        } else {
-            // 更新失敗（他画面で削除された場合など）：画像3のエラー表示
-            req.setAttribute("errors", "科目が存在しません");
-            // 入力値を保持して修正画面へ戻す
-            req.setAttribute("subject_cd", cd);
-            req.setAttribute("subject_name", name);
-            req.getRequestDispatcher("subject_update.jsp").forward(req, res);
-        }
-
-    }
-}
+	    if (isSuccess) {
+	        // 更新成功：完了画面へ
+	        req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
+	    } else {
+	        // 更新失敗：エラーメッセージをセットして元の画面へ
+	        req.setAttribute("errors", "科目が存在しません");
+	        req.setAttribute("cd", cd);
+	        req.setAttribute("name", name);
+	        req.getRequestDispatcher("subject_update.jsp").forward(req, res);
+	    }
+	}}
