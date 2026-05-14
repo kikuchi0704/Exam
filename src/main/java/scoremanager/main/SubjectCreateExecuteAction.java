@@ -64,7 +64,7 @@ public class SubjectCreateExecuteAction extends Action {
 			req.getRequestDispatcher("subject_create_done.jsp").forward(req, res);
 		} else { // エラーメッセージがある場合
 			// 登録画面にフォワード
-			req.getRequestDispatcher("SubjectCreate.action").forward(req, res);
+			req.getRequestDispatcher("subject_create.jsp").forward(req, res);
 		}
 	}
 
