@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.Subject;
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.SubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -33,13 +35,13 @@ public class TestRegistAction extends Action {
         ClassNumDao cDao = new ClassNumDao();
         List<String> classNumSet = cDao.filter(teacher.getSchool()); // List<String>が返る
         
-        //SubjectDao sDao = new SubjectDao();
-       // List<Subject> subjects = sDao.filter(teacher.getSchool());
+        SubjectDao sDao = new SubjectDao();
+        List<Subject> subjects = sDao.filter(teacher.getSchool());
      // リクエスト属性にセット
         request.setAttribute("ent_year_set", entYearSet);
         
         request.setAttribute("class_num_set", classNumSet);
-       // request.setAttribute("subjects", subjects);
+        request.setAttribute("subjects", subjects);
 
 
        
