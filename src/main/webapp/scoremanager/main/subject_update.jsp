@@ -27,7 +27,7 @@
                            id="cd"
                            name="cd"
                            value="${cd}"
-                           readonly />
+                           />
                 </div>
 
                 <div>
