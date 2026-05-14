@@ -147,43 +147,34 @@ public class TestDao extends Dao {
         return list;
     }
 
-    public boolean save(List<Test> list) throws Exception {
+    public void save(List<Test> tests) throws Exception {
         Connection connection = getConnection();
-        boolean result = true;
         try {
+            // オートコミットをオフにしてトランザクション開始（一括処理のため）
             connection.setAutoCommit(false);
-            for (Test test : list) {
-                // 同クラス内のprivate saveを呼び出す際、コネクションを渡す
-                boolean isSuccess = save(test, connection);
-                if (!isSuccess) {
-                    result = false;
-                    break;
-                }
+            
+            for (Test test : tests) {
+                // 提供された private save メソッドを呼び出す
+                save(test, connection);
             }
-            if (result) {
-                connection.commit();
-            } else {
-                connection.rollback();
-            }
+            
+            connection.commit(); // すべて成功したら確定
         } catch (Exception e) {
-            if (connection != null) connection.rollback();
+            connection.rollback(); // 失敗したら元に戻す
             throw e;
         } finally {
-            if (connection != null) {
-                connection.setAutoCommit(true);
-                connection.close();
-            }
+            connection.close();
         }
-        return result;
     }
 
-    private boolean save(Test test, Connection connection) throws Exception {
-        PreparedStatement statement = null;
+    public boolean save(Test test, Connection connection) throws Exception {
+    	PreparedStatement statement = null;
         int count = 0;
         try {
-           
             boolean exists = false;
             String checkSql = "SELECT COUNT(*) FROM test WHERE student_no = ? AND subject_cd = ? AND school_cd = ? AND no = ?";
+            
+            // 引数の connection を使ってチェック
             try (PreparedStatement checkStmt = connection.prepareStatement(checkSql)) {
                 checkStmt.setString(1, test.getStudent().getNo());
                 checkStmt.setString(2, test.getSubject().getCd());
@@ -196,6 +187,7 @@ public class TestDao extends Dao {
             }
 
             if (!exists) {
+                // 引数の connection を使って prepareStatement する
                 statement = connection.prepareStatement(
                     "insert into test(student_no, subject_cd, school_cd, no, point, class_num) values(?,?,?,?,?,?)"
                 );
@@ -206,6 +198,7 @@ public class TestDao extends Dao {
                 statement.setInt(5, test.getPoint());
                 statement.setString(6, test.getClassNum());
             } else {
+                // ここも同様に引数の connection を使う
                 statement = connection.prepareStatement(
                     "update test set point=?, class_num=? where student_no=? and subject_cd=? and school_cd=? and no=?"
                 );
@@ -218,10 +211,14 @@ public class TestDao extends Dao {
             }
             count = statement.executeUpdate();
         } finally {
-            if (statement != null) statement.close();
+            if (statement != null) {
+                statement.close();
+            }
+            // ここで connection.close() はしない（Action側で閉じるため）
         }
         return count > 0;
     }
+    
     
     
 }

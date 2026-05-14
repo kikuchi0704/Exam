@@ -17,12 +17,12 @@
 
 			<div class="mx-4">
 				<%-- 確認メッセージ --%>
-				<p>科目名：${subject_name} （${subject_cd}） を削除しますか？</p>
+				<p>科目名：${subject.name} （${subject.cd}） を削除しますか？</p>
 
 				<%-- 削除処理へ送るフォーム --%>
 				<form action="SubjectDeleteExecute.action" method="post">
 					<%-- hidden属性（科目コード、科目名） --%>
-					<input type="hidden" name="subject_cd" value="${subject_cd}">
+					<input type="hidden" name="cd" value="${subject_cd}">
 					<input type="hidden" name="subject_name" value="${subject_name}">
 
 					<div class="mt-4">

@@ -33,8 +33,8 @@ public class SubjectUpdateAction extends Action {
             return;
         }
 
-        req.setAttribute("cd", subject.getCd());
-        req.setAttribute("name", subject.getName());
+        req.setAttribute("subject_cd", subject.getCd());
+        req.setAttribute("subject_name", subject.getName());
 
         req.getRequestDispatcher("subject_update.jsp").forward(req, res);
     }

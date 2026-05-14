@@ -40,8 +40,8 @@ public class SubjectCreateAction extends Action {
 		// リクエストにデータをセット
 		req.setAttribute("subject_set", list);
         // JSPへフォワード 7
-        req.getRequestDispatcher("subject_create_done.jsp")
-           .forward(req, res);
+        //req.getRequestDispatcher("subject_create_done.jsp")
+          // .forward(req, res);
    
 		// JSPへフォワード 7
 		req.getRequestDispatcher("subject_create.jsp").forward(req, res);
