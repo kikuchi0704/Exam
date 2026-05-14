@@ -163,4 +163,35 @@ public class SubjectDao extends Dao {
     	}
 		return count > 0;
     } 
+    
+    /**
+     * 科目情報の更新
+     * @param subject 更新する科目情報
+     * @return 成功した場合はtrue
+     */
+    public boolean update(Subject subject) throws Exception {
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        int count = 0;
+
+        try {
+            // 科目コードと学校コードが一致するレコードの「科目名」を更新
+            statement = connection.prepareStatement(
+                "update subject set name = ? where cd = ? and school_cd = ?"
+            );
+            statement.setString(1, subject.getName());
+            statement.setString(2, subject.getCd());
+            statement.setString(3, subject.getSchool().getCd());
+
+            // 実行
+            count = statement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+        // 1件以上更新されていれば成功
+        return count > 0;
+    }
 }
