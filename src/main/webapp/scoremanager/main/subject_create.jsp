@@ -3,10 +3,6 @@
     pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/common/base.jsp">
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
     <c:param name="title">
         得点管理システム
     </c:param>
@@ -54,9 +50,6 @@
             <a href="SubjectList.action">戻る</a>
         </section>
     </c:param>
-<<<<<<< HEAD
-=======
-    
 	<c:param name="content">
 		<section>
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目報情登録</h2>
@@ -78,5 +71,4 @@
 			<a href="SubjectLIst.action">戻る</a>
 		</section>
 	</c:param>
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
 </c:import>
