@@ -26,8 +26,8 @@ public class SubjectCreateExecuteAction extends Action {
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 
 		// リクエストパラメーターの取得 2
-		subject_cd = req.getParameter("cd");
-		subject_name = req.getParameter("name");
+		subject_cd = req.getParameter("subject_cd");
+		subject_name = req.getParameter("subject_name");
 
 		// DBからデータ取得 3
 		// なし
@@ -54,9 +54,9 @@ public class SubjectCreateExecuteAction extends Action {
 
 		// レスポンス値をセット 6
 		// リクエストに科目コードをセット
-		req.setAttribute("cd", subject_cd);
+		req.setAttribute("subject_cd", subject_cd);
 		// リクエストに科目名をセット
-		req.setAttribute("name", subject_name);
+		req.setAttribute("subject_name", subject_name);
 
 		// JSPへフォワード 7
 		if (errors.isEmpty()) { // エラーメッセージがない場合
