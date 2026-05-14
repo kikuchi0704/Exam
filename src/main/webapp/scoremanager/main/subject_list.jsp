@@ -54,13 +54,11 @@
         <!-- 操作ボタン -->
         <td class="text-end">
 
-            <a href="SubjectUpdate.action?cd=${subject.cd}"
-               class="btn btn-sm btn-primary">
+            <a href="SubjectUpdate.action?cd=${subject.cd}">
                 変更
             </a>
 
             <a href="SubjectDelete.action?cd=${subject.cd}"
-               class="btn btn-sm btn-danger"
                onclick="return confirm('削除しますか？');">
                 削除
             </a>

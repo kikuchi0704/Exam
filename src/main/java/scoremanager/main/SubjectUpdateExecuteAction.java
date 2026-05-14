@@ -26,7 +26,8 @@ public class SubjectUpdateExecuteAction extends Action {
 
         SubjectDao dao = new SubjectDao();
         dao.save(subject);
-
+        
+        
         // ★更新後は一覧へ戻すのが正しい
         req.getRequestDispatcher("SubjectList.action").forward(req, res);
     }
