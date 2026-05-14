@@ -33,7 +33,7 @@ public class ClassNumDao extends Dao {
 			// プリペアードステートメントを実行
 			ResultSet rSet = statement.executeQuery();			
 			// 学校Daoを初期化
-			SchoolDao schoolDao = new SchoolDao();
+			//SchoolDao schoolDao = new SchoolDao();
 
 			if (rSet.next()) {
 				// リザルトセットが存在する場合
@@ -96,7 +96,6 @@ public class ClassNumDao extends Dao {
 
 			// リザルトセットを全件走査
 			while (rSet.next()) {
-				// リストにクラス番号を追加
 				list.add(rSet.getString("class_num"));
 			}
 		} catch (Exception e) {
