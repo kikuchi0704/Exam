@@ -17,7 +17,7 @@ public class SubjectUpdateAction extends Action {
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
 
-        String cd = req.getParameter("subject_cd");
+        String cd = req.getParameter("cd");
 
         // 学校情報取得
         School school = teacher.getSchool();
@@ -34,7 +34,7 @@ public class SubjectUpdateAction extends Action {
         }
 
         req.setAttribute("subject_cd", subject.getCd());
-        req.setAttribute("susbject_name", subject.getName());
+        req.setAttribute("subject_name", subject.getName());
 
         req.getRequestDispatcher("subject_update.jsp").forward(req, res);
     }
