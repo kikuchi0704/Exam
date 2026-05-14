@@ -9,11 +9,7 @@
 
             <%-- 1. 検索エリア --%>
             <div class="row border mx-3 mb-4 py-3 rounded">
-<<<<<<< HEAD
-                <form action="TestRegistExecute.action" method="get">
-=======
                 <form action="TestRegist.action" method="get">
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
                     <div class="row align-items-center">
                         <div class="col-3">
                             <label class="form-label">入学年度</label>
@@ -42,30 +38,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-<<<<<<< HEAD
-                        <%-- 回数 --%>
-	                    <div class="col-2">
-	                        <label class="form-label">回数</label>
-	
-	                        <select class="form-select" name="f4">
-	                            <option value="1"
-	                                <c:if test="${f4 == '1'}">
-	                                    selected
-	                                </c:if>>
-	                                1
-	                            </option>
-	
-	                            <option value="2"
-	                                <c:if test="${f4 == '2'}">
-	                                    selected
-	                                </c:if>>
-	                                2
-	                            </option>
-	                        </select>
-	                    </div>
-	                    <div class="col-2">
-                            <button class="btn btn-secondary w-100">検索</button>
-=======
                         <div class="col-2">
                             <label class="form-label">回数</label>
                             <select name="f4" class="form-select" required>
@@ -76,126 +48,11 @@
                         </div>
                         <div class="col-1 mt-4">
                             <button class="btn btn-secondary">検索</button>
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
                         </div>
                     </div>
                 </form>
             </div>
 
-<<<<<<< HEAD
-            <%-- 成績一覧表示 --%>
-            <c:choose>
-
-                <%-- データあり --%>
-                <c:when test="${not empty tests}">
-
-                    <div class="px-4 mb-2">
-                        科目：${tests[0].subject.name}（${f4}回）
-                    </div>
-
-                    <%-- 全体エラー --%>
-                    <c:if test="${not empty error}">
-                        <div class="mt-2 text-danger text-center">
-                            ${error}
-                        </div>
-                    </c:if>
-
-                    <%-- 登録フォーム --%>
-                    <form method="post" action="TestRegistExecute.action">
-
-                        <%-- hidden項目 --%>
-                        <input type="hidden" name="subject_cd" value="${f3}">
-                        <input type="hidden" name="count" value="${f4}">
-                        <input type="hidden" name="ent_year" value="${f1}">
-                        <input type="hidden" name="class_num" value="${f2}">
-
-                        <table class="table table-hover">
-
-                            <thead>
-                                <tr>
-                                    <th>入学年度</th>
-                                    <th>クラス</th>
-                                    <th>学生番号</th>
-                                    <th>氏名</th>
-                                    <th>点数</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                                <c:forEach var="test" items="${tests}">
-
-                                    <tr>
-
-                                        <td>${test.student.entYear}</td>
-
-                                        <td>${test.student.classNum}</td>
-
-                                        <td>${test.student.no}</td>
-
-                                        <td>${test.student.name}</td>
-
-                                        <td>
-
-                                            <%-- 点数入力 --%>
-                                            <input
-                                                type="number"
-                                                name="point_${test.student.no}"
-                                                value="${test.point}"
-                                                class="form-control"
-                                                min="0"
-                                                max="100"
-                                                style="width:100px;">
-
-                                            <%-- 学生番号保持 --%>
-                                            <input
-                                                type="hidden"
-                                                name="student_no"
-                                                value="${test.student.no}">
-
-                                            <%-- 個別エラー表示 --%>
-                                            <c:if test="${errors[test.student.no] != null}">
-                                                <div class="text-warning small">
-                                                    ${errors[test.student.no]}
-                                                </div>
-                                            </c:if>
-
-                                        </td>
-
-                                    </tr>
-
-                                </c:forEach>
-
-                            </tbody>
-
-                        </table>
-
-                        <%-- 登録ボタン --%>
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-dark">
-                                登録して終了
-                            </button>
-                        </div>
-
-                    </form>
-
-                </c:when>
-
-                <%-- データなし --%>
-                <c:otherwise>
-
-                    <%-- 検索後のみ表示 --%>
-                    <c:if test="${searched}">
-                        <div class="px-4">
-                            学生情報が存在しませんでした。
-                        </div>
-                    </c:if>
-
-                </c:otherwise>
-
-            </c:choose>
-
-=======
             <%-- 2. 検索結果表示エリア --%>
             <c:if test="${searched}">
                 <div class="px-3">
@@ -251,7 +108,6 @@
                     </c:choose>
                 </div>
             </c:if>
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
         </section>
     </c:param>
 </c:import>

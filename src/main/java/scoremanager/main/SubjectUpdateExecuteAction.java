@@ -27,14 +27,13 @@ public class SubjectUpdateExecuteAction extends Action {
         subject.setSchool(teacher.getSchool());
 
         SubjectDao dao = new SubjectDao();
-<<<<<<< HEAD
+
         dao.save(subject);
         
         
         // ★更新後は一覧へ戻すのが正しい
         req.getRequestDispatcher("SubjectList.action").forward(req, res);
-=======
-        
+
         // DAOのupdateメソッドを呼び出す
         boolean isSuccess = dao.update(subject);
 
@@ -49,6 +48,6 @@ public class SubjectUpdateExecuteAction extends Action {
             req.setAttribute("subject_name", name);
             req.getRequestDispatcher("subject_update.jsp").forward(req, res);
         }
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
+
     }
 }
