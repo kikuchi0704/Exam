@@ -28,6 +28,6 @@ public class SubjectUpdateExecuteAction extends Action {
         dao.save(subject);
 
         // ★更新後は一覧へ戻すのが正しい
-        req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
+        req.getRequestDispatcher("SubjectList.action").forward(req, res);
     }
 }

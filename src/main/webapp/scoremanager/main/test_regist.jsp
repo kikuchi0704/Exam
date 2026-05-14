@@ -9,11 +9,10 @@
 
             <%-- 1. 検索エリア --%>
             <div class="row border mx-3 mb-4 py-3 rounded">
-<<<<<<< HEAD
+
                 <form action="TestRegistExecute.action" method="get">
-=======
+
                 <form action="TestRegist.action" method="get">
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
                     <div class="row align-items-center">
                         <div class="col-3">
                             <label class="form-label">入学年度</label>
@@ -42,7 +41,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-<<<<<<< HEAD
                         <%-- 回数 --%>
 	                    <div class="col-2">
 	                        <label class="form-label">回数</label>
@@ -65,7 +63,6 @@
 	                    </div>
 	                    <div class="col-2">
                             <button class="btn btn-secondary w-100">検索</button>
-=======
                         <div class="col-2">
                             <label class="form-label">回数</label>
                             <select name="f4" class="form-select" required>
@@ -76,13 +73,11 @@
                         </div>
                         <div class="col-1 mt-4">
                             <button class="btn btn-secondary">検索</button>
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
                         </div>
                     </div>
                 </form>
             </div>
 
-<<<<<<< HEAD
             <%-- 成績一覧表示 --%>
             <c:choose>
 
@@ -195,7 +190,7 @@
 
             </c:choose>
 
-=======
+
             <%-- 2. 検索結果表示エリア --%>
             <c:if test="${searched}">
                 <div class="px-3">
@@ -251,7 +246,6 @@
                     </c:choose>
                 </div>
             </c:if>
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
         </section>
     </c:param>
 </c:import>
