@@ -16,7 +16,7 @@
             <%-- 検索フォーム --%>
                <%-- 1. 科目情報から検索 --%>
             <div class="row border mx-3 mb-4 py-3 rounded">
-                <form action="TestListSubjectExecute.action" method="get">
+                <form action="TestRegistExecute.action" method="get">
                     <div class="row align-items-center">
                         <div class="col-3">
                             <label class="form-label">入学年度</label>
@@ -45,44 +45,32 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="col-2">
+                        <%-- 回数 --%>
+	                    <div class="col-2">
+	                        <label class="form-label">回数</label>
+	
+	                        <select class="form-select" name="f4">
+	                            <option value="1"
+	                                <c:if test="${f4 == '1'}">
+	                                    selected
+	                                </c:if>>
+	                                1
+	                            </option>
+	
+	                            <option value="2"
+	                                <c:if test="${f4 == '2'}">
+	                                    selected
+	                                </c:if>>
+	                                2
+	                            </option>
+	                        </select>
+	                    </div>
+	                    <div class="col-2">
                             <button class="btn btn-secondary w-100">検索</button>
                         </div>
                     </div>
                 </form>
             </div>
-
-                    <%-- 回数 --%>
-                    <div class="col-2">
-                        <label class="form-label">回数</label>
-
-                        <select class="form-select" name="f4">
-                            <option value="1"
-                                <c:if test="${f4 == '1'}">
-                                    selected
-                                </c:if>>
-                                1
-                            </option>
-
-                            <option value="2"
-                                <c:if test="${f4 == '2'}">
-                                    selected
-                                </c:if>>
-                                2
-                            </option>
-                        </select>
-                    </div>
-
-                    <%-- 検索ボタン --%>
-                    <div class="col-1 text-center">
-                        <button type="submit" class="btn btn-secondary" id="filter-button">
-                            検索
-                        </button>
-                    </div>
-
-                </div>
-
-            </form>
 
             <%-- 成績一覧表示 --%>
             <c:choose>
