@@ -15,11 +15,11 @@
 			<form action="StudentUpdateExecute.action" method="get">
 				<div>
 					<label class="mx-auto py-2" for="ent_year">入学年度</label><br>
-					<input class="border border-0 ps-3" type="text" id="ent_year" name="ent_year" value="${ent_year }" readonly />
+					<input class="border border-0 ps-3" type="text" id="ent_year" name="ent_year" value="${ent_year }"  />
 				</div>
 				<div class="mx-auto py-2">
 					<label class="mx-auto py-2" for="no">学生番号</label><br>
-					<input class="border border-0 ps-3" type="text" id="no" value="${no }" name="no" readonly />
+					<input class="border border-0 ps-3" type="text" id="no" value="${no }" name="no"  />
 				</div>
 				<div class="mx-auto py-2">
 					<label for="name">氏名</label><br>

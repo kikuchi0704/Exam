@@ -35,7 +35,7 @@ public class TestListSubjectExecuteAction extends Action {
             TestListSubjectDao dao = new TestListSubjectDao();
             List<TestListSubject> list = dao.filter(entYear, classNum, subject, teacher.getSchool());
             req.setAttribute("tests", list);
-        }
+            req.setAttribute("subject", subject);        }
         
         req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
     }

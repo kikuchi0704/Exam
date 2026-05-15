@@ -163,7 +163,6 @@ public class SubjectDao extends Dao {
     	}
 		return count > 0;
     } 
-    
     /**
      * 科目情報の更新
      * @param subject 更新する科目情報

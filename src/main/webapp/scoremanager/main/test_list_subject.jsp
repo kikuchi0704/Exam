@@ -61,8 +61,11 @@
 			</div>
 			
             <%-- テーブル表示部分 --%>
+            <c:if test="${not empty subject}">
+			    <div class="mb-2">科目：${subject.name}</div>
+			</c:if>
             <c:choose>
-                <c:when test="${not empty tests}">
+                <c:when test="${tests.size() > 0}">
                     <table class="table table-hover">
                         <thead>
                             <tr>

@@ -41,7 +41,10 @@
                                 </c:forEach>
                             </select>
                         </div>
+<<<<<<< HEAD
                         <%-- 回数 --%>
+=======
+>>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
                         <div class="col-2">
                             <label class="form-label">回数</label>
                             <select name="f4" class="form-select" required>
@@ -50,15 +53,25 @@
                                 <option value="2" <c:if test="${f4 == '2'}">selected</c:if>>2</option>
                             </select>
                         </div>
+<<<<<<< HEAD
                         <%-- 検索ボタン --%>
                         <div class="col-1 mt-4">
                             <button type="submit" class="btn btn-secondary">検索</button>
                         </div>
+=======
+                        <div class="col-2 text-center">
+							<button class="btn btn-secondary" id="filter-button">検索</button>
+						</div>
+>>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
                     </div>
                 </form>
             </div>
 
+<<<<<<< HEAD
             <%-- 2. 検索結果・登録エリア --%>
+=======
+            <%-- 2. 検索結果表示エリア --%>
+>>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
             <c:if test="${searched}">
                 <div class="px-3">
                     <c:choose>

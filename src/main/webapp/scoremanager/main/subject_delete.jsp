@@ -23,7 +23,11 @@
 				<form action="SubjectDeleteExecute.action" method="post">
 					<%-- hidden属性（科目コード、科目名） --%>
 					<input type="hidden" name="cd" value="${subject.cd}">
+<<<<<<< HEAD
 					<input type="hidden" name="subject_name" value="${subject.name}">
+=======
+<input type="hidden" name="subject_name" value="${subject.name}">
+>>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
 
 					<div class="mt-4">
 						<%-- 削除ボタン --%>

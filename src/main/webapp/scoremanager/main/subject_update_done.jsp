@@ -1,5 +1,5 @@
 <%-- subject_update_done.jsp --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
 <c:import url="/common/base.jsp">
@@ -8,14 +8,12 @@
         <section>
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">科目情報変更</h2>
             
-            <%-- 画像2の②：完了メッセージ --%>
-            <div class="alert alert-success mt-3">
+            <div class="alert alert-success">
                 変更が完了しました
             </div>
 
             <div class="mt-3">
-                <%-- 画像2の③：一覧へのリンク --%>
-                <a href="SubjectList.action">科目一覧へ戻る</a>
+                <a href="SubjectList.action" class="btn btn-secondary">科目一覧</a>
             </div>
         </section>
     </c:param>

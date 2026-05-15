@@ -37,8 +37,8 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="col-2">
-                            <button class="btn btn-secondary w-100">検索</button>
+                        <div class="col-2 text-center">
+                            <button class="btn btn-secondary" id="filter-botton">検索</button>
                         </div>
                     </div>
                 </form>
@@ -52,8 +52,8 @@
                             <label class="form-label">学生番号</label>
                             <input type="text" name="f4" class="form-control" placeholder="学生番号を入力してください" required>
                         </div>
-                        <div class="col-2">
-                            <button class="btn btn-secondary w-100">検索</button>
+                        <div class="col-2 text-center">
+                            <button class="btn btn-secondary" id="filter-botton">検索</button>
                         </div>
                     </div>
                 </form>

@@ -64,31 +64,31 @@
 
             <c:if test="${not empty student}">
                 <div class="mb-3 h5">氏名：${student.name} (${student.no})</div>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>科目名</th>
-                            <th>科目コード</th>
-                            <th>回数</th>
-                            <th>点数</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="t" items="${tests}">
-                            <tr>
-                                <td>${t.subjectName}</td>
-                                <td>${t.subjectCd}</td>
-                                <td>${t.num}回</td>
-                                <td>${t.point}</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
             </c:if>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>科目名</th>
+                        <th>科目コード</th>
+                        <th>回数</th>
+                        <th>点数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="t" items="${tests}">
+                        <tr>
+                            <td>${t.subjectName}</td>
+                            <td>${t.subjectCd}</td>
+                            <td>${t.num}回</td>
+                            <td>${t.point}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
             <c:if test="${empty student and not empty param.f4}">
                 <div class="text-warning">学生情報が存在しませんでした</div>
             </c:if>
-
             <div class="mt-3"><a href="TestList.action" class="btn btn-outline-secondary">戻る</a></div>
         </section>
     </c:param>

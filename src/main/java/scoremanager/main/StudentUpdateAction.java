@@ -56,6 +56,6 @@ public class StudentUpdateAction extends Action {
     	req.setAttribute("isattend", isAttend);
     	
         // JSPへフォワード
-        req.getRequestDispatcher("subject_update.jsp").forward(req, res);
+        req.getRequestDispatcher("student_update.jsp").forward(req, res);
     }
 }
