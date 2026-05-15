@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+
 <c:import url="/common/base.jsp">
     <c:param name="title">
         得点管理システム
@@ -12,10 +13,10 @@
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
                 科目登録
             </h2>
-            <form action="SubjectCreateExecute.action"method="post">
-                <div class="mt-2 text-warning">
-                    ${errors.get("1")}
-                </div>
+            
+            <form action="SubjectCreateExecute.action" method="post">
+                
+                <%-- 科目コード入力エリア --%>
                 <div>
                     <label for="subject_cd">科目コード</label><br>
                     <input class="form-control"
@@ -24,13 +25,20 @@
                            name="subject_cd"
                            value="${subject_cd}"
                            required
-                           maxlength="10"
-                           placeholder="科目コードを入力してください" />
+                           <%-- 3文字のみというルールに合わせるなら maxlength も 3 にすると親切です --%>
+                           maxlength="3" 
+                           placeholder="科目コード（3文字）を入力してください" />
                 </div>
-                <div class="mt-2 text-warning">
-                    ${errors.get("2")}
-                </div>
-                <div>
+                
+                <%-- エラー表示エリア（科目コード用） --%>
+                <%-- Java側からエラーを "subject_cd_error" という名前で送る想定 --%>
+                <c:if test="${not empty errors.get('subject_cd_error')}">
+                    <div class="mt-2 text-danger">
+                        ${errors.get("subject_cd_error")}
+                    </div>
+                </c:if>
+
+                <div class="mt-4">
                     <label for="subject_name">科目名</label><br>
                     <input class="form-control"
                            type="text"
@@ -41,34 +49,22 @@
                            maxlength="30"
                            placeholder="科目名を入力してください" />
                 </div>
-                <div class="mx-auto py-2">
+                
+                <%-- エラー表示エリア（科目名用） --%>
+                <c:if test="${not empty errors.get('subject_name_error')}">
+                    <div class="mt-2 text-danger">
+                        ${errors.get("subject_name_error")}
+                    </div>
+                </c:if>
+
+                <div class="mx-auto py-3">
                     <button class="btn btn-secondary" type="submit">
                         登録
                     </button>
                 </div>
             </form>
+            
             <a href="SubjectList.action">戻る</a>
         </section>
     </c:param>
-	<c:param name="content">
-		<section>
-			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目報情登録</h2>
-			<form action="StudentCreateExecute.action" method="get">
-				<div class="mt-2 text-warning">${errors.get("1") }</div>
-				<div>
-					<label for="no">科目コード</label><br>
-					<input class="form-control" type="text" id="no" name="no" value="${no }" required maxlength="10" placeholder="科目コードを入力してください" />
-				</div>
-				<div class="mt-2 text-warning">${errors.get("2") }</div>
-				<div>
-					<label for="name">科目名</label><br>
-					<input class="form-control" type="text" id="name" name="name" value="${name }" required maxlength="30" placeholder="科目名を入力してください" />
-				</div>
-				<div class="mx-auto py-2">
-					<button class="btn btn-secondary" id="create-button" name="end">登録</button>
-				</div>
-			</form>
-			<a href="SubjectLIst.action">戻る</a>
-		</section>
-	</c:param>
 </c:import>

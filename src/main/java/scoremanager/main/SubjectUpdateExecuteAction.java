@@ -16,18 +16,34 @@ public class SubjectUpdateExecuteAction extends Action {
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
 
+        // JSPからのパラメータ取得
         String cd = req.getParameter("subject_cd");
         String name = req.getParameter("subject_name");
 
+        // Beanにセット
         Subject subject = new Subject();
         subject.setCd(cd);
         subject.setName(name);
         subject.setSchool(teacher.getSchool());
 
         SubjectDao dao = new SubjectDao();
-        dao.save(subject);
+        
+        // DAOのupdateメソッドを呼び出す
+        boolean isSuccess = dao.update(subject);
+
 
         // ★更新後は一覧へ戻すのが正しい
         req.getRequestDispatcher("SubjectList.action").forward(req, res);
-    }
-}
+        if (isSuccess) {
+            // 更新成功：完了画面へ（画像2）
+            req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
+        } else {
+            // 更新失敗（他画面で削除された場合など）：画像3のエラー表示
+            req.setAttribute("errors", "科目が存在しません");
+            // 入力値を保持して修正画面へ戻す
+            req.setAttribute("subject_cd", cd);
+            req.setAttribute("subject_name", name);
+            req.getRequestDispatcher("subject_update.jsp").forward(req, res);
+        }
+    }   
+} 
