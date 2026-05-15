@@ -11,7 +11,6 @@
             <div class="row border mx-3 mb-4 py-3 rounded">
                 <form action="TestRegist.action" method="get">
                     <div class="row align-items-center">
-                        <%-- 入学年度 --%>
                         <div class="col-3">
                             <label class="form-label">入学年度</label>
                             <select name="f1" class="form-select" required>
@@ -21,7 +20,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <%-- クラス --%>
                         <div class="col-3">
                             <label class="form-label">クラス</label>
                             <select name="f2" class="form-select" required>
@@ -31,7 +29,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <%-- 科目 --%>
                         <div class="col-3">
                             <label class="form-label">科目</label>
                             <select name="f3" class="form-select" required>
@@ -41,10 +38,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-<<<<<<< HEAD
-                        <%-- 回数 --%>
-=======
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
                         <div class="col-2">
                             <label class="form-label">回数</label>
                             <select name="f4" class="form-select" required>
@@ -53,44 +46,28 @@
                                 <option value="2" <c:if test="${f4 == '2'}">selected</c:if>>2</option>
                             </select>
                         </div>
-<<<<<<< HEAD
-                        <%-- 検索ボタン --%>
-                        <div class="col-1 mt-4">
-                            <button type="submit" class="btn btn-secondary">検索</button>
-                        </div>
-=======
                         <div class="col-2 text-center">
 							<button class="btn btn-secondary" id="filter-button">検索</button>
 						</div>
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
                     </div>
                 </form>
             </div>
 
-<<<<<<< HEAD
-            <%-- 2. 検索結果・登録エリア --%>
-=======
             <%-- 2. 検索結果表示エリア --%>
->>>>>>> branch 'master' of https://github.com/kikuchi0704/Exam.git
             <c:if test="${searched}">
                 <div class="px-3">
+                    <%-- 画像2枚目の見出し：科目名 (回数回目) --%>
+                    <h4 class="mb-3 text-primary">
+                        ${selected_subject.name} (${f4}回目)
+                    </h4>
+
                     <c:choose>
-                        <%-- データあり：成績入力テーブルを表示 --%>
-                        <c:when test="${not empty tests}">
-                            <h4 class="mb-3 text-primary">
-                                ${tests[0].subject.name} （${f4}回目）
-                            </h4>
-
-                            <%-- 全体エラー表示 --%>
-                            <c:if test="${not empty error}">
-                                <div class="alert alert-danger text-center">${error}</div>
-                            </c:if>
-
+                        <c:when test="${tests != null && tests.size() > 0}">
                             <form action="TestRegistExecute.action" method="post">
-                                <%-- 共通情報を隠しパラメータで送信 --%>
+                                <%-- 登録時に必要な共通情報を隠しパラメータで送信 --%>
+                                <input type="hidden" name="subject_cd" value="${f3}">
                                 <input type="hidden" name="ent_year" value="${f1}">
                                 <input type="hidden" name="class_num" value="${f2}">
-                                <input type="hidden" name="subject_cd" value="${f3}">
                                 <input type="hidden" name="count" value="${f4}">
 
                                 <table class="table table-hover mt-3">
@@ -106,22 +83,15 @@
                                     <tbody>
                                         <c:forEach var="test" items="${tests}">
                                             <tr>
-                                                <td>${test.student.entYear}</td>
-                                                <td>${test.student.classNum}</td>
+                                                <td>${f1}</td>
+                                                <td>${f2}</td>
                                                 <td>${test.student.no}</td>
                                                 <td>${test.student.name}</td>
                                                 <td>
                                                     <input type="number" name="point_${test.student.no}" 
                                                            value="${test.point}" class="form-control" 
-                                                           style="width: 100px;" min="0" max="100">
-                                                    
-                                                    <%-- どの学生の点数か識別するための隠し項目 --%>
+                                                           style="width: 100px;" min="0" max="100" required>
                                                     <input type="hidden" name="student_no" value="${test.student.no}">
-
-                                                    <%-- 個別エラー（バリデーション用） --%>
-                                                    <c:if test="${not empty errors[test.student.no]}">
-                                                        <div class="text-warning small">${errors[test.student.no]}</div>
-                                                    </c:if>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -132,8 +102,6 @@
                                 </div>
                             </form>
                         </c:when>
-
-                        <%-- データなし --%>
                         <c:otherwise>
                             <div class="alert alert-warning">学生情報が存在しませんでした。</div>
                         </c:otherwise>

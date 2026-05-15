@@ -30,20 +30,6 @@ public class SubjectUpdateExecuteAction extends Action {
 
 	    // --- 修正箇所：ここにあった SubjectList.action への forward を削除 ---
 
-        // ★更新後は一覧へ戻すのが正しい
-        req.getRequestDispatcher("SubjectList.action").forward(req, res);
-        if (isSuccess) {
-            // 更新成功：完了画面へ（画像2）
-            req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
-        } else {
-            // 更新失敗（他画面で削除された場合など）：画像3のエラー表示
-            req.setAttribute("errors", "科目が存在しません");
-            // 入力値を保持して修正画面へ戻す
-            req.setAttribute("subject_cd", cd);
-            req.setAttribute("subject_name", name);
-            req.getRequestDispatcher("subject_update.jsp").forward(req, res);
-        }
-
 	    // 3. DAOのupdateメソッドを呼び出す（save ではなく update）
 	    boolean isSuccess = dao.update(subject);
 
@@ -57,5 +43,4 @@ public class SubjectUpdateExecuteAction extends Action {
 	        req.setAttribute("name", name);
 	        req.getRequestDispatcher("subject_update.jsp").forward(req, res);
 	    }
-	}
-}
+	}}

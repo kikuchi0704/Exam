@@ -29,8 +29,6 @@ public class SubjectDeleteExecuteAction extends Action {
 			sDao.delete(subject);
 		}
 
-		System.out.println(teacher);
-
 		// JSPへフォワード（削除完了画面、または科目一覧へリダイレクト）
 		req.getRequestDispatcher("subject_delete_done.jsp").forward(req, res);
 	}
