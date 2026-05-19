@@ -13,7 +13,9 @@
                     <div class="row align-items-center">
                         <div class="col-3">
                             <label class="form-label">入学年度</label>
-                            <select name="f1" class="form-select" required>
+                            <select name="f1" class="form-select" required 
+                            		oninvalid="this.setCustomValidity('入学年度とクラスと科目と回数を選択してください')"
+        							oninput="this.setCustomValidity('')">
                                 <option value="">--------</option>
                                 <c:forEach var="year" items="${ent_year_set}">
                                     <option value="${year}" <c:if test="${year == f1}">selected</c:if>>${year}</option>
@@ -22,7 +24,9 @@
                         </div>
                         <div class="col-3">
                             <label class="form-label">クラス</label>
-                            <select name="f2" class="form-select" required>
+                            <select name="f2" class="form-select" required
+                            		oninvalid="this.setCustomValidity('入学年度とクラスと科目と回数を選択してください')"
+        							oninput="this.setCustomValidity('')">
                                 <option value="">--------</option>
                                 <c:forEach var="num" items="${class_num_set}">
                                     <option value="${num}" <c:if test="${num == f2}">selected</c:if>>${num}</option>
@@ -31,7 +35,9 @@
                         </div>
                         <div class="col-3">
                             <label class="form-label">科目</label>
-                            <select name="f3" class="form-select" required>
+                            <select name="f3" class="form-select" required
+                            		oninvalid="this.setCustomValidity('入学年度とクラスと科目と回数を選択してください')"
+        							oninput="this.setCustomValidity('')">
                                 <option value="">--------</option>
                                 <c:forEach var="sub" items="${subjects}">
                                     <option value="${sub.cd}" <c:if test="${sub.cd == f3}">selected</c:if>>${sub.name}</option>
@@ -40,7 +46,9 @@
                         </div>
                         <div class="col-2">
                             <label class="form-label">回数</label>
-                            <select name="f4" class="form-select" required>
+                            <select name="f4" class="form-select" required
+                            		oninvalid="this.setCustomValidity('入学年度とクラスと科目と回数を選択してください')"
+        							oninput="this.setCustomValidity('')">
                                 <option value="">---</option>
                                 <option value="1" <c:if test="${f4 == '1'}">selected</c:if>>1</option>
                                 <option value="2" <c:if test="${f4 == '2'}">selected</c:if>>2</option>
@@ -90,7 +98,9 @@
                                                 <td>
                                                     <input type="number" name="point_${test.student.no}" 
                                                            value="${test.point}" class="form-control" 
-                                                           style="width: 100px;" min="0" max="100" required>
+                                                           style="width: 100px;" min="0" max="100" required
+                                                           oninvalid="this.setCustomValidity('0～100の範囲で入力してください')"
+                                                           oninput="this.setCustomValidity('')">
                                                     <input type="hidden" name="student_no" value="${test.student.no}">
                                                 </td>
                                             </tr>
