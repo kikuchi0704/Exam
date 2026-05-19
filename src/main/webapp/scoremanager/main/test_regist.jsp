@@ -11,7 +11,7 @@
             <div class="row border mx-3 mb-4 py-3 rounded">
                 <form action="TestRegist.action" method="get">
                     <div class="row align-items-center">
-                        <div class="col-3">
+                        <div class="col-2">
                             <label class="form-label">入学年度</label>
                             <select name="f1" class="form-select" required 
                             		oninvalid="this.setCustomValidity('入学年度とクラスと科目と回数を選択してください')"
@@ -22,7 +22,7 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <label class="form-label">クラス</label>
                             <select name="f2" class="form-select" required
                             		oninvalid="this.setCustomValidity('入学年度とクラスと科目と回数を選択してください')"
