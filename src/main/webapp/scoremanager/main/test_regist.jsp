@@ -65,9 +65,9 @@
             <c:if test="${searched}">
                 <div class="px-3">
                     <%-- 画像2枚目の見出し：科目名 (回数回目) --%>
-                    <h4 class="mb-3 text-primary">
+                    <div class="mb-3 text-dark small">
                         ${selected_subject.name} (${f4}回目)
-                    </h4>
+                    </div>
 
                     <c:choose>
                         <c:when test="${tests != null && tests.size() > 0}">
