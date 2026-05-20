@@ -26,14 +26,14 @@
                         <%-- 入力エラーで戻ってきた場合は入力値を残し、初期表示時は元の値を表示 --%>
                         <input type="text" name="classNum" 
                                value="${not empty classNum ? classNum : oldClassNum}" 
-                               class="form-control" style="width: 200px;" required
+                               class="form-control" required
                                oninvalid="this.setCustomValidity('クラス番号を入力してください')"
                                oninput="this.setCustomValidity('')">
                     </div>
 
-                    <div class="mt-4">
-                        <button type="submit" class="btn btn-dark me-2">変更</button>
-                        <a href="ClassList.action" class="btn btn-outline-secondary">戻る</a>
+                    <div class="mb-4">
+                        <button type="submit" class="btn btn-primary">変更</button>
+                        <a href="ClassList.action">戻る</a>
                     </div>
                 </form>
             </div>
