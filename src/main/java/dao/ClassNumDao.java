@@ -139,11 +139,14 @@ public class ClassNumDao extends Dao {
 
 		try {
 			// プリペアードステートメントにINSERT文をセット
-
+			statement = connection.prepareStatement(
+					"insert into class_num(school_cd, class_num) values(?, ?)"
+					);
 			// プリペアードステートメントに値をバインド
-
-					
+			statement.setString(1, classNum.getSchool().getCd());
+			statement.setString(2, classNum.getClass_num());
 			// プリペアードステートメントを実行
+			count = statement.executeUpdate();
 			
 		} catch (Exception e) {
 			throw e;
@@ -193,23 +196,35 @@ public class ClassNumDao extends Dao {
 
 		try {
 			// プリペアードステートメントにUPDATE文をセット
-
+			statement = connection.prepareStatement(
+					"update class_num set class_num = ? where school_cd = ? and class_num = ?"
+					);
 			
+			statement.setString(1, newClassNum); // 新しいクラス番号
+			statement.setString(2, classNum.getSchool().getCd()); // 学校コード
+			statement.setString(3, classNum.getClass_num()); // 古いクラス番号
 			
 			// プリペアードステートメントを実行
-
+			count += statement.executeUpdate();
+			
 			// プリペアードステートメントを閉じる
 			if (statement != null) {
-            try {
-					statement.close();
+				try {
+						statement.close();
 				} catch (SQLException sqle) {
-					throw sqle;
+						throw sqle;
 				}
 			}
 
 			// 登録されている学生のクラスも変更
+			statement = connection.prepareStatement(
+					"update student set class_num = ? where school_cd = ? and class_num = ?"
+					);
+			statement.setString(1, newClassNum);
+			statement.setString(2, classNum.getSchool().getCd());
+			statement.setString(3, classNum.getClass_num());
 
-			
+			count += statement.executeUpdate();
 			
 			// プリペアードステートメントを閉じる
 			if (statement != null) {
@@ -221,11 +236,14 @@ public class ClassNumDao extends Dao {
 			}
 
 			// テストに登録されているクラスも変更
+			statement = connection.prepareStatement(
+					"update test set class_num = ? where school_cd = ? and class_num = ?"
+					);
+			statement.setString(1, newClassNum);
+			statement.setString(2, classNum.getSchool().getCd());
+			statement.setString(3, classNum.getClass_num());
 
-			
-			
-			
-			
+			count += statement.executeUpdate();
 			
 		} catch (Exception e) {
 			throw e;
@@ -248,11 +266,9 @@ public class ClassNumDao extends Dao {
 			}
 		}
 
-		if (count > 3) {
-			// 実行件数が3件以上ある場合
+		if (count > 0) {
 			return true;
 		} else {
-			// 実行件数が3件未満の場合
 			return false;
 		}
 	}
