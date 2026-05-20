@@ -2,7 +2,6 @@ package scoremanager.main;
 
 import java.util.List;
 
-import bean.ClassNum;
 import bean.Teacher;
 import dao.ClassNumDao;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,20 +18,7 @@ public class ClassCreateAction extends Action {
 		Teacher teacher = (Teacher) session.getAttribute("user");
 		
 		ClassNumDao classNumDao = new ClassNumDao();
-		
-		String classStr = req.getParameter("class_num");
-		
-		ClassNum classNum = new ClassNum();
-		classNum.setSchool(teacher.getSchool());
-		classNum.setClass_num(classStr);
-		
-		// クラス情報をDBに登録
-		classNumDao.save(classNum);
-		
-		// 最新のクラス一覧を取得
 		List<String> list = classNumDao.filter(teacher.getSchool());
-		
-		// JSPへ引き渡す
 		req.setAttribute("class_num_set", list);
 		
 		req.getRequestDispatcher("class_create.jsp").forward(req, res);
